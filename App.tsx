@@ -10,20 +10,20 @@ export default function App() {
   useEffect(()=>{
      async function Main() {
         let db =  await Conexao();
-        await createTable(db);
-        // inserirUsuario(db,'Giovanna','@Giovanna');
+        await createTable(db!);
+        //inserirUsuario(db,'Gio','@Giovanna');
 
-          const registro = await selectUsuario(db);
+          const registro = await selectUsuario(db!) as Array<{ID_US: number, NOME_US: string, EMAIL_US: string}>;
 
-          for( const linhas of registro as {ID_US:number, NOME_US:string, EMAIL_US:string } ){
+          
+            for (const linhas of registro) {
+              console.log(linhas.ID_US, linhas.NOME_US, linhas.EMAIL_US);
+            }
+
+         const nome  = await selectUsuarioId(db!,1) as {ID_US: number, NOME_US: string, EMAIL_US: string};       
+
              
-              console.log(linhas.ID_US, linhas.NOME_US, linhas.EMAIL_US,)
-          }
-
-         const nome  = await selectUsuarioId(db,2);       
-
-             
-              console.log(nome.ID_US, nome.NOME_US,nome.EMAIL_US,)
+              console.log(nome.ID_US, nome.NOME_US,nome.EMAIL_US)
         
 
       
