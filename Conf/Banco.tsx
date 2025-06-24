@@ -30,7 +30,7 @@ async function createTable(db: SQLite.SQLiteDatabase) {
 // -------------------------------------------
 // inserir dados na tabela
 
-async function inserirUsuario(db: SQLite.SQLiteDatabase, name:string, email:string) {
+async function createUsuario(db: SQLite.SQLiteDatabase, name:string, email:string) {
   
     try {
           await  db.runAsync(
@@ -79,7 +79,33 @@ async function selectUsuario(db:SQLite.SQLiteDatabase) {
 
  }
 
+ async function deleteUsuario(db:SQLite.SQLiteDatabase, id:number) {
+    try {
+        await db.runAsync('DELETE FROM USUARIO WHERE ID_US = ?', id);
+        console.log('Usuario deletado com sucesso');
+    } catch (error) {
+        console.log('Erro ao deletar usuario ' + error);
+    }
+ }
+
+ async function updateUsuario(ID_US: number, NOME_US: string, EMAIL_US: string) {
+    try {
+        const db = await Conexao();
+        if (db) {
+            await db.runAsync(
+                'UPDATE USUARIO SET NOME_US = ?, EMAIL_US = ? WHERE ID_US = ?',
+                NOME_US,
+                EMAIL_US,
+                ID_US
+            );
+            console.log('Usuario atualizado com sucesso');
+        }
+    } catch (error) {
+        console.log('Erro ao atualizar usuario ' + error);
+    }
+ }
+
 
 // -------------------------------------------
 
-export { Conexao, createTable, inserirUsuario, selectUsuario, selectUsuarioId};
+export { Conexao, createTable, createUsuario, selectUsuario, selectUsuarioId, updateUsuario, deleteUsuario };
